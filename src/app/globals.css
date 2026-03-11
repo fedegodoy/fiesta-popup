@@ -1,26 +1,258 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-color: #0c0c0c;
+  --window-bg: #1c1c1c;
+  --border-color: #333;
+  --text-main: #00ff00; /* Winamp green */
+  --text-highlight: #ff6beb; /* Logo pink */
+  --text-yellow: #f2e16d; /* Logo yellow */
+  
+  --btn-bg: #2a2a2a;
+  --btn-border-light: #555;
+  --btn-border-dark: #000;
+  
+  /* Retro gradient */
+  --logo-gradient: linear-gradient(90deg, #ff6beb 0%, #ff8e8b 30%, #f2e16d 70%, #90e0ef 100%);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+/* Retro Window Container */
+.window {
+  background-color: var(--window-bg);
+  border: 4px solid var(--border-color);
+  border-top-color: var(--btn-border-light);
+  border-left-color: var(--btn-border-light);
+  border-right-color: var(--btn-border-dark);
+  border-bottom-color: var(--btn-border-dark);
+  padding: 4px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 8px 8px 0px rgba(0,0,0,0.8);
+}
+
+.title-bar {
+  background: linear-gradient(90deg, #ff6beb, #3b006a);
+  color: white;
+  padding: 4px 8px;
+  font-weight: bold;
+  font-family: 'VT323', monospace;
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid;
+  border-top-color: #ffa1f3;
+  border-left-color: #ffa1f3;
+  border-right-color: #2b004d;
+  border-bottom-color: #2b004d;
+  margin-bottom: 12px;
+}
+
+.content {
+  padding: 16px;
+  background-color: #050505;
+  border: 2px solid #333;
+  border-top-color: #000;
+  border-left-color: #000;
+}
+
+/* Logo styling */
+.logo-container {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.logo-text {
+  font-family: 'Arial Black', Impact, sans-serif;
+  font-size: 3.5rem;
+  line-height: 1;
+  background: var(--logo-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1.5px black;
+  filter: drop-shadow(4px 4px 0px #000);
+  transform: skew(-5deg);
+  margin-bottom: 8px;
+}
+
+.slogan {
+  background: linear-gradient(90deg, #f2e16d, #90e0ef);
+  color: #000;
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-top: -10px;
+  transform: rotate(-2deg);
+  box-shadow: 2px 2px 0px #000;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Forms */
+label {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text-yellow);
+  font-weight: bold;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  background-color: #000;
+  border: 2px solid #555;
+  border-top-color: #000;
+  border-left-color: #000;
+  color: var(--text-main);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1rem;
+  margin-bottom: 16px;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  border-color: var(--text-highlight);
+}
+
+/* Retro Button */
+button {
+  width: 100%;
+  background-color: var(--btn-bg);
+  color: white;
+  border: 3px solid;
+  border-top-color: var(--btn-border-light);
+  border-left-color: var(--btn-border-light);
+  border-right-color: var(--btn-border-dark);
+  border-bottom-color: var(--btn-border-dark);
+  padding: 12px;
+  font-family: 'VT323', monospace;
+  font-size: 1.5rem;
+  cursor: pointer;
+  background: linear-gradient(180deg, #444 0%, #222 100%);
+  transition: all 0.1s;
+}
+
+button:active {
+  border-top-color: var(--btn-border-dark);
+  border-left-color: var(--btn-border-dark);
+  border-right-color: var(--btn-border-light);
+  border-bottom-color: var(--btn-border-light);
+  background: linear-gradient(180deg, #222 0%, #444 100%);
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* List / Items */
+.song-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.song-item {
+  background: #111;
+  border: 2px solid #333;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.song-item.downloaded {
+  opacity: 0.4;
+  filter: grayscale(100%);
+  order: 999; /* Move to bottom in flex container */
+}
+
+.song-item img {
+  width: 60px;
+  height: 60px;
+  border: 1px solid #555;
+  object-fit: cover;
+}
+
+.song-info {
+  flex: 1;
+}
+
+.song-title {
+  color: var(--text-highlight);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.song-artist {
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.guest-name {
+  color: #888;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.badge {
+  background: var(--text-highlight);
+  color: #000;
+  padding: 2px 6px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.dj-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-small {
+  padding: 6px;
+  font-size: 1rem;
+}
+
+/* Animations */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.loading-text {
+  animation: blink 1s infinite;
+  color: var(--text-yellow);
+  text-align: center;
+  margin-top: 20px;
+}
+
+.success-message {
+  text-align: center;
+  margin-top: 20px;
+  color: var(--text-highlight);
+  font-weight: bold;
+  padding: 10px;
+  border: 2px dashed var(--text-highlight);
+  background: rgba(255, 107, 235, 0.1);
 }
