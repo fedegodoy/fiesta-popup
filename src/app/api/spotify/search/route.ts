@@ -49,7 +49,9 @@ export async function GET(request: Request) {
     const searchData = await searchResponse.json();
     
     if (!searchData.tracks || !searchData.tracks.items.length) {
-      return NextResponse.json({ error: 'No track found' }, { status: 404 });
+      // Instead of throwing a 404 error, we return a successful response indicating no match.
+      // The frontend will use this to still save the request without spotify data.
+      return NextResponse.json({ found: false });
     }
 
     // Sort by popularity descending to ensure original/famous tracks are prioritized over obscure covers
@@ -58,6 +60,7 @@ export async function GET(request: Request) {
     
     
     return NextResponse.json({
+      found: true,
       track_id: track.id,
       url: track.external_urls.spotify,
       cover_url: track.album.images[0]?.url || '',

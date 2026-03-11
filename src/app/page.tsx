@@ -29,6 +29,16 @@ export default function Home() {
 
       const track = await res.json();
 
+      let trackId = null;
+      let trackUrl = null;
+      let trackCover = null;
+
+      if (track.found) {
+         trackId = track.track_id;
+         trackUrl = track.url;
+         trackCover = track.cover_url;
+      }
+
       // 2. Insert into Supabase with all fields
       const { error } = await supabase.from("song_requests").insert([
         {
@@ -36,9 +46,9 @@ export default function Home() {
           song_query: song.trim(),
           artist_name: artist.trim() || null,
           dj_message: message.trim() || null,
-          spotify_track_id: track.track_id,
-          spotify_url: track.url,
-          cover_url: track.cover_url,
+          spotify_track_id: trackId,
+          spotify_url: trackUrl,
+          cover_url: trackCover,
           status: "pending"
         }
       ]);

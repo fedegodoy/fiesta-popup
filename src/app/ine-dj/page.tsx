@@ -9,9 +9,9 @@ type SongRequest = {
   song_query: string;
   artist_name?: string | null;
   dj_message?: string | null;
-  spotify_track_id: string;
-  spotify_url: string;
-  cover_url: string;
+  spotify_track_id?: string | null;
+  spotify_url?: string | null;
+  cover_url?: string | null;
   status: "pending" | "downloaded";
   created_at: string;
 };
@@ -117,7 +117,13 @@ export default function DJPanel() {
         <ul className="song-list">
           {requests.map((req) => (
             <li key={req.id} className={`song-item ${req.status === "downloaded" ? "downloaded" : ""}`}>
-              {req.cover_url && <img src={req.cover_url} alt="Cover" />}
+              {req.cover_url ? (
+                <img src={req.cover_url} alt="Cover" />
+              ) : (
+                <div style={{ width: 50, height: 50, background: '#333', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 4, marginRight: 10, fontSize: '0.6rem', color: '#888', textAlign: 'center' }}>
+                  SIN<br/>PORTADA
+                </div>
+              )}
               
               <div className="song-info">
                 <div className="song-title">
@@ -135,9 +141,13 @@ export default function DJPanel() {
               </div>
               
               <div className="dj-controls">
-                <a href={req.spotify_url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                  <button className="btn-small" style={{ background: '#1db954', border: '2px solid #000', color: 'black', fontWeight: 'bold' }}>▶ SPOTIFY</button>
-                </a>
+                {req.spotify_url ? (
+                  <a href={req.spotify_url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                    <button className="btn-small" style={{ background: '#1db954', border: '2px solid #000', color: 'black', fontWeight: 'bold' }}>▶ SPOTIFY</button>
+                  </a>
+                ) : (
+                  <button className="btn-small" disabled style={{ background: '#444', border: '2px solid #222', color: '#888', cursor: 'not-allowed' }}>NO SPOTIFY</button>
+                )}
                 <button 
                   className="btn-small" 
                   onClick={() => toggleDownloaded(req.id, req.status)}
