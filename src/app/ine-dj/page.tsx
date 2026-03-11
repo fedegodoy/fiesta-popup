@@ -7,6 +7,8 @@ type SongRequest = {
   id: string;
   guest_name: string;
   song_query: string;
+  artist_name?: string | null;
+  dj_message?: string | null;
   spotify_track_id: string;
   spotify_url: string;
   cover_url: string;
@@ -118,13 +120,23 @@ export default function DJPanel() {
               {req.cover_url && <img src={req.cover_url} alt="Cover" />}
               
               <div className="song-info">
-                <div className="song-title">{req.song_query}</div>
-                <div className="guest-name">Pedido por: {req.guest_name}</div>
+                <div className="song-title">
+                  {req.song_query}
+                  {req.artist_name && <span style={{ fontSize: '0.9rem', color: '#ccc', marginLeft: '6px' }}> - {req.artist_name}</span>}
+                </div>
+                
+                {req.dj_message && (
+                  <div style={{ color: 'var(--text-yellow)', fontSize: '0.85rem', fontStyle: 'italic', marginTop: '2px' }}>
+                    "{req.dj_message}"
+                  </div>
+                )}
+                
+                <div className="guest-name" style={{ marginTop: '4px' }}>Pedido por: {req.guest_name}</div>
               </div>
               
               <div className="dj-controls">
                 <a href={req.spotify_url} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                  <button className="btn-small" style={{ background: '#1db954', border: '2px solid #000' }}>▶ SPOTIFY</button>
+                  <button className="btn-small" style={{ background: '#1db954', border: '2px solid #000', color: 'black', fontWeight: 'bold' }}>▶ SPOTIFY</button>
                 </a>
                 <button 
                   className="btn-small" 

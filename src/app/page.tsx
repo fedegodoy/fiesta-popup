@@ -5,6 +5,8 @@ import { supabase } from "@/utils/supabase";
 
 export default function Home() {
   const [song, setSong] = useState("");
+  const [artist, setArtist] = useState("");
+  const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,20 +19,23 @@ export default function Home() {
     setErrorMessage("");
 
     try {
-      // 1. Fetch song details from Spotify API Route
-      const res = await fetch(`/api/spotify/search?q=${encodeURIComponent(song)}`);
+      // 1. Combine query for Spotify
+      const query = artist.trim() ? `${song.trim()} ${artist.trim()}` : song.trim();
+      const res = await fetch(`/api/spotify/search?q=${encodeURIComponent(query)}`);
       
       if (!res.ok) {
-        throw new Error("No pudimos encontrar ese tema en Spotify. Probá con otro.");
+        throw new Error("No pudimos encontrar ese tema en Spotify. Probá con otro o revisá cómo está escrito.");
       }
 
       const track = await res.json();
 
-      // 2. Insert into Supabase
+      // 2. Insert into Supabase with all fields
       const { error } = await supabase.from("song_requests").insert([
         {
           guest_name: name.trim() || "Anónimo",
           song_query: song.trim(),
+          artist_name: artist.trim() || null,
+          dj_message: message.trim() || null,
           spotify_track_id: track.track_id,
           spotify_url: track.url,
           cover_url: track.cover_url,
@@ -44,6 +49,8 @@ export default function Home() {
 
       setStatus("success");
       setSong("");
+      setArtist("");
+      setMessage("");
       setName("");
 
       // Reset success message after 5 seconds
@@ -70,9 +77,29 @@ export default function Home() {
           id="song"
           value={song}
           onChange={(e) => setSong(e.target.value)}
-          placeholder="Ej: Macarena - Los del Río" 
+          placeholder="Ej: Macarena" 
           autoComplete="off"
           required
+        />
+
+        <label htmlFor="artist">ARTISTA (Opcional pero recomendado)</label>
+        <input 
+          type="text" 
+          id="artist"
+          value={artist}
+          onChange={(e) => setArtist(e.target.value)}
+          placeholder="Ej: Los del Río" 
+          autoComplete="off"
+        />
+
+        <label htmlFor="message">MENSAJE PARA LA DJ (Opcional)</label>
+        <input 
+          type="text" 
+          id="message"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Ej: Es la que suena en tiktok!" 
+          autoComplete="off"
         />
 
         <label htmlFor="name">TU NOMBRE (Opcional)</label>
