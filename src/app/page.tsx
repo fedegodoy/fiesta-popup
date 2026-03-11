@@ -21,22 +21,24 @@ export default function Home() {
     try {
       // 1. Combine query for Spotify
       const query = artist.trim() ? `${song.trim()} ${artist.trim()}` : song.trim();
-      const res = await fetch(`/api/spotify/search?q=${encodeURIComponent(query)}`);
-      
-      if (!res.ok) {
-        throw new Error("No pudimos encontrar ese tema en Spotify. Probá con otro o revisá cómo está escrito.");
-      }
-
-      const track = await res.json();
 
       let trackId = null;
       let trackUrl = null;
       let trackCover = null;
 
-      if (track.found) {
-         trackId = track.track_id;
-         trackUrl = track.url;
-         trackCover = track.cover_url;
+      try {
+        const res = await fetch(`/api/spotify/search?q=${encodeURIComponent(query)}`);
+        if (res.ok) {
+          const track = await res.json();
+          if (track.found) {
+            trackId = track.track_id;
+            trackUrl = track.url;
+            trackCover = track.cover_url;
+          }
+        }
+      } catch {
+        // Spotify failed — continue without Spotify data
+        console.warn("Spotify search failed, saving request without Spotify data.");
       }
 
       // 2. Insert into Supabase with all fields
