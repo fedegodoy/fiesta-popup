@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Fiesta PopUp - Pedí tu tema",
-  description: "Escaneá, pedí y bailá. La rocola de la PopUp.",
+  metadataBase: new URL("https://fiestapopup.com.ar"),
+  title: "Fiesta PopUp | Edición Rocola",
+  description: "Escaneá, pedí y bailá",
   openGraph: {
-    title: "Fiesta PopUp - Pedí tu tema",
-    description: "Escaneá, pedí y bailá. La rocola de la PopUp.",
+    title: "Fiesta PopUp | Edición Rocola",
+    description: "Escaneá, pedí y bailá",
     url: "https://fiestapopup.com.ar",
     siteName: "Fiesta PopUp",
     images: [
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Fiesta PopUp Logo and Slogan",
+        alt: "Fiesta PopUp | Edición Rocola",
       },
     ],
     locale: "es_AR",
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fiesta PopUp - Pedí tu tema",
-    description: "Escaneá, pedí y bailá. La rocola de la PopUp.",
+    title: "Fiesta PopUp | Edición Rocola",
+    description: "Escaneá, pedí y bailá",
     images: ["/og-image.png"],
   },
 };
