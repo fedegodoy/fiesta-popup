@@ -1,9 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/utils/supabase";
 
 export default function Home() {
+  useEffect(() => {
+    document.body.classList.add("no-scroll");
+    return () => { document.body.classList.remove("no-scroll"); };
+  }, []);
   const [song, setSong] = useState("");
   const [artist, setArtist] = useState("");
   const [message, setMessage] = useState("");
@@ -19,15 +23,14 @@ export default function Home() {
     setErrorMessage("");
 
     try {
-      // 1. Combine query for Spotify
-      const query = artist.trim() ? `${song.trim()} ${artist.trim()}` : song.trim();
-
       let trackId = null;
       let trackUrl = null;
       let trackCover = null;
 
       try {
-        const res = await fetch(`/api/spotify/search?q=${encodeURIComponent(query)}`);
+        const searchParams = new URLSearchParams({ q: song.trim() });
+        if (artist.trim()) searchParams.set("artist", artist.trim());
+        const res = await fetch(`/api/spotify/search?${searchParams}`);
         if (res.ok) {
           const track = await res.json();
           if (track.found) {

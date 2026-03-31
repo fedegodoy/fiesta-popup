@@ -21,6 +21,9 @@
 
 html, body {
   height: 100%;
+}
+
+body.no-scroll {
   overflow: hidden;
 }
 
@@ -208,6 +211,24 @@ button:active {
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+/* DJ Panel */
+.dj-panel {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+
+.btn-danger {
+  background: linear-gradient(180deg, #8b0000 0%, #5c0000 100%) !important;
+  color: #ff6b6b !important;
+  border-color: #a00 !important;
+  margin-top: 12px;
+}
+
+.btn-danger:active {
+  background: linear-gradient(180deg, #5c0000 0%, #8b0000 100%) !important;
 }
 
 /* List / Items */

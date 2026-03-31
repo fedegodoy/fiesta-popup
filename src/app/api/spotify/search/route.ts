@@ -34,8 +34,14 @@ export async function GET(request: Request) {
     const tokenData = await tokenResponse.json();
     const accessToken = tokenData.access_token;
 
-    // 2. Search Track (Fetch top 10 to find the most popular match instead of weird covers)
-    const searchResponse = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track&limit=10`, {
+    // 2. Search Track using Spotify field filters for better accuracy
+    const artist = searchParams.get('artist');
+    let searchQuery = query;
+    if (artist) {
+      searchQuery = `track:${query} artist:${artist}`;
+    }
+
+    const searchResponse = await fetch(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchQuery)}&type=track&limit=10`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
