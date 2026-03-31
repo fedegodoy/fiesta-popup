@@ -78,8 +78,8 @@ export default function Home() {
   return (
     <div>
       <div className="logo-container">
-        <h1 className="logo-text">POPUP</h1>
-        <div className="slogan">Escaneá, pedí y bailá</div>
+        <img src="/logo_popup.png" alt="Fiesta PopUp" />
+        <div className="slogan">PEDÍ Y BAILÁ</div>
       </div>
 
       <form onSubmit={handleSubmit}>

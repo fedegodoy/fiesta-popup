@@ -36,15 +36,20 @@ export default function RootLayout({
   return (
     <html lang="es">
       <body>
-        <main className="window">
-          <div className="title-bar">
-            <span>FiestaPopUp_v1.0.exe</span>
-            <span>[X]</span>
+        <div className="page-wrapper">
+          <main className="window">
+            <div className="title-bar">
+              <span>FiestaPopUp_v1.0.exe</span>
+              <span>[X]</span>
+            </div>
+            <div className="content">
+              {children}
+            </div>
+          </main>
+          <div className="venue-logo">
+            <img src="/logo_911.png" alt="Club Social NueveOnce" />
           </div>
-          <div className="content">
-            {children}
-          </div>
-        </main>
+        </div>
       </body>
     </html>
   );
