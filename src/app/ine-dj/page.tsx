@@ -51,6 +51,10 @@ export default function DJPanel() {
 
     fetchRequests();
 
+    // Poll every 5 seconds as reliable fallback
+    const interval = setInterval(fetchRequests, 5000);
+
+    // Also try realtime websocket
     const subscription = supabase
       .channel("song_requests_changes")
       .on(
@@ -61,6 +65,7 @@ export default function DJPanel() {
       .subscribe();
 
     return () => {
+      clearInterval(interval);
       supabase.removeChannel(subscription);
     };
   }, [isAuthenticated]);
